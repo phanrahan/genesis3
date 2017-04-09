@@ -1,2 +1,3 @@
-# genesis3
-Magma version of genesis2
+python genesis3 version of the perl genesis2 wallace tree
+
+

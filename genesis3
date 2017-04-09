@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+import sys
+from magma import *
+from genesis3 import DefineTemplatedVerilog
+
+if len(sys.argv) != 2:
+    print('usage: genesis3 filename\n')
+    sys.exit(0)
+
+name = sys.argv[1]
+source = open(name+'.vp').read()
+
+C1 = DefineTemplatedVerilog(name,
+    "a", In(Array4), "b", In(Array4), "c", In(Array4),
+    "s", Out(Array4), "co", Out(Array4),
+    source=source, N=4)
+C2 = DefineTemplatedVerilog(name,
+    "a", In(Array4), "b", In(Array4), "c", In(Array4),
+    "s", Out(Array4), "co", Out(Array4),
+    source=source, N=4)
+assert C1 is C2
+
+main = DefineCircuit("main", 
+    "a", In(Array4), "b", In(Array4), "c", In(Array4),
+    "s", Out(Array4), "co", Out(Array4))
+csa = C1()
+csa(main.a, main.b, main.c)
+wire(csa.s, main.s)
+wire(csa.co, main.co)
+EndCircuit()
+
+compile(name, main)
+
+
+
