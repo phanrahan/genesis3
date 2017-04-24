@@ -1,1 +1,1 @@
-./genesis3 CSA
+python3 genesis3.py CSA

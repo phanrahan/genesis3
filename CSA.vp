@@ -1,0 +1,7 @@
+module ${parameters.name} (
+   input [${parameters.N-1}:0] a,b,c,
+   output [${parameters.N-1}:0] s, co);
+
+   assign s = a ^ b ^c;
+   assign co = a&b | b&c | a&c;
+endmodule
