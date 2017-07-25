@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-import sys
-from magma import compile
-from genesis3 import DefineFromTemplatedVerilogFile
+import os, sys
+from magma import compile, DefineFromTemplatedVerilogFile
 
 if len(sys.argv) != 2:
     print('usage: genesis3 name\n')
     sys.exit(0)
 
 name = sys.argv[1]
-filename = name+'.vp'
+print(name)
 
-main = DefineFromTemplatedVerilogFile(name, filename, N=4)
+modules = DefineFromTemplatedVerilogFile(name+'.vp', N=4)
+assert len(modules) == 1
 
-compile(name, main)
+module = modules[0]
+
+buildname = os.path.join('build', module.name)
+compile(buildname, module)
 
 
 
